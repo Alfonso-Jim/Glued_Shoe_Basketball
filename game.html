@@ -1,0 +1,254 @@
+<html>
+<head>
+<title>Playing Glued-Shoe Basketball</title>
+<script>
+
+// This version by S. Lemery and AJC
+// Based on Andy Harris textbook game
+// April 2014
+// Plays the Glued-Shoe basketball game
+
+// To start this game properly, run gsbbSTART.html, which loads this file.
+// Play the game a bit if you haven't already.
+  
+// main variables are declared here
+var playerScore;
+var opScore;
+var currentPlayer;
+
+// next we declare constants for positions
+var BASKET  = 0;  //basket
+var CENTER  = 1;  //center
+var FORWARD = 2;  //forward
+var THREEP  = 3;  //three point shooter
+var GUARD   = 4;  //guard
+var INBOUNDER = 5;  //in-bounder
+
+//define array for player names
+var playerName = new Array( "basket", "center", "forward", "3 point shooter", "guard", "in-bounder");
+
+
+// Define arrays to hold rows of data for each player.
+// Each row holds the chance of completing a pass to the
+// basket, center, forward, threep, guard, or inbounder.
+
+// ........................ bask, cent, fd, 3p, guard, inb
+var CENTERrow    = new Array(.80, .00, .90, .90, .80, .80);
+var FORWARDrow   = new Array(.60, .70, .00, .70, .80, .90);
+var THREEProw    = new Array(.35, .50, .80, .00, .80, .90);
+var GUARDrow     = new Array(.15, .40, .70, .90, .00, .90);
+var INBOUNDERrow = new Array(.05, .10, .30, .70, .99, .00);
+
+//make a table, which is an array of arrays
+var playerData = new Array (0, CENTERrow, FORWARDrow, THREEProw,
+                                  GUARDrow, INBOUNDERrow);
+
+function resetGame(){
+  //reset all game variables
+  playerScore = 0;
+  opScore = 0;
+  currentPlayer = INBOUNDER;
+  document.myForm.scoreBoard.value = "click target to make a pass";
+  updateScreen(currentPlayer);
+} // end resetGame
+
+
+function throwTo(receiver){
+
+  // see if pass or shot can be made
+
+  if (Math.random() < playerData[currentPlayer][receiver]){
+    // successful pass or shot
+    // if it was a shot, update the score
+    if (receiver == BASKET){
+      document.myForm.scoreBoard.value = "SCORE!!! \n";
+      playerScore += 2;
+      // look for three pointers!
+      if (currentPlayer >= THREEP){
+        document.myForm.scoreBoard.value += "It's a three-pointer! \n";
+        playerScore +=1;
+      } // end three point if
+      updateScore();
+      currentPlayer = INBOUNDER;  // make it and take it
+    } else {
+      document.myForm.scoreBoard.value = " ... pass made to " + playerName[receiver] + "\n";
+      currentPlayer = receiver;
+    } // end case for a score
+
+  } else {
+    //pass or shot did not succeed
+	
+    document.myForm.scoreBoard.value = "blocked!!";
+	
+	currentPlayer++;   				// move back one player
+    if (currentPlayer > INBOUNDER){   // but don't back up too far
+      currentPlayer = INBOUNDER;
+    } 
+	
+	// still inside else case for unsuccessful pass or shot
+    // opponent gets a random chance of scoring
+
+    if (Math.random() < .20){
+      document.myForm.scoreBoard.value += "Opponent scored!! \n";
+      opScore += 2;
+      updateScore();
+      currentPlayer = INBOUNDER;
+    } // end if
+
+  } // end if
+  updateScreen(currentPlayer);
+  
+} // end throwTo function
+
+
+function updateScore(){
+  var scoreCard = "";
+  scoreCard += "Player" +    "\t" + "Computer" + "\n";
+  scoreCard += playerScore + "\t" +  opScore;
+  document.myForm.scoreBoard.value += scoreCard;
+  
+  //check for win
+  if (opScore >= 7) { 
+    alert ("Better luck next time  :c");
+    resetGame();
+  } else if (playerScore >= 7) {
+    alert ("Congratulations you Won!");
+    resetGame();
+  } // end if
+
+} // end updateScore
+
+function updateScreen(currentPlayer){
+  //resets all the images to versions without the ball,
+  // then shows only current player with ball
+  
+  //reset all images
+  for (i = 1; i <= 5; i++){
+   var imgPlayer = eval("document.imgPlay" + i);
+   imgPlayer.src = "player.gif"
+  } // end for loop
+
+  //show current image
+  imgPlayer = eval("document.imgPlay" + currentPlayer);
+  imgPlayer.src = "playerWithBall.gif";
+  window.status = playerName[currentPlayer];
+
+} // end updateScreen
+
+</script>
+</head>
+
+<body background = court.gif
+      onLoad = "resetGame()">
+<form name = myForm>
+
+ 
+<table>
+<tr>  <!-- row contains a filler, a basket, and a Center -->
+  <td>  <!-- filler -->
+  <img src = "blank.gif"
+       height = 20
+       width = 115>
+
+  <!-- basket zone --> 		
+  <img src = "blank.gif"
+       name = "img0"
+	   onClick = "throwTo(BASKET)"
+       height = 25
+       width = 38   border = 1
+	   align = "top">
+  </a>
+  
+  <!-- basketball CENTER player  -->  
+  <img src = "player.gif"
+       name = "imgPlay1"
+	   onClick = "throwTo(CENTER)"
+       height = 40
+       width = 40>
+  </a>
+  </td>
+</tr>
+</table>
+
+<!-- Forward -->
+<table>
+<tr>
+  <td>
+  <img src = "blank.gif"
+       height = 20
+       width = 180 >
+  
+  <img src = "player.gif"
+       name = "imgPlay2"
+	   onClick = "throwTo(FORWARD)"
+       height = 40
+       width = 40>
+  </a>
+  </td>
+</tr>
+</table>
+
+<!-- three point shooter -->
+<table>
+<tr>
+<td>
+  <img src = "blank.gif"
+       height = 40
+       width = 130>
+	   
+  <img src = "player.gif"
+       name = "imgPlay3"
+	   onClick = "throwTo(THREEP)"
+       height = 40
+       width = 40>
+  </a>
+</td>
+</tr>
+</table>
+
+<!-- guard -->
+<table>
+<tr>
+<td>
+  <img src = "blank.gif"
+       height = 120
+       width = 200>
+
+  <img src = "player.gif"
+       name = "imgPlay4"
+	   onClick = "throwTo(GUARD)"
+       height = 40
+       width = 40>
+  </a>
+  </td>
+</tr>
+</table>
+
+<!-- in-bounder -->
+<table>
+<tr>
+<td>
+  <img src = "blank.gif"
+       height = 60
+       width = 200>
+  
+  <img src = "player.gif"
+       name = "imgPlay5"
+	   onClick = "throwTo(INBOUNDER)"
+       height = 40
+       width = 40>
+  </a>
+</td>
+</tr>
+  
+</table>
+
+<textarea name = scoreBoard
+          rows = 5
+          cols = 32>
+</textarea>
+
+</form>
+
+</body>
+</html>
