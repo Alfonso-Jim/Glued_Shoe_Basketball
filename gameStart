@@ -1,0 +1,63 @@
+{::nomarkdown}
+
+<html>
+<head>
+<title>Starting Glued-Shoe Basketball</title>
+<script>
+function startGame(){
+  // Glued-Shoe Basketball - version 2 - April 2014
+  // original version by Andy Harris
+  // this version by S. Lemery and AJC
+  
+  // Task: Adjust the windowsize below so the court
+  //         is a little less wide and tall.
+   
+  // This code loads up the basketball court in a new window
+  var myFeatures = "height=500,width=300";
+  var court = window.open("gsbball.html", "bbCourt", myFeatures);
+  court.focus();
+} // end of startGame function
+
+</script>
+</head>
+
+<body background="background.jpg">
+<br><br><br><br><br><br><br><br><br><br><br>
+<center>
+<table border=1 BORDERCOLOR=black>
+<tr><td>
+<center>
+
+<font face=verdana color=white>
+<hr size=5 color=GREY>
+
+<marquee><h1>Glued-Shoe Basketball</h1></marquee>
+<hr size=5 color=GREY>
+
+A basketball game where the shoes are glued to the floor.<br />
+You have five players on the court - but nobody can move.<br />
+The ball starts with your in-bounder.<br />
+Click on other players to pass.<br />
+Click on the basket to shoot.<br />
+Players closer to the basket are more likely to score.<br />
+If a pass or shot is blocked, the other team might score.<br />
+The game is played to 7 points.  Good luck!<br>
+<hr size=5 color=GREY>
+
+<form>
+<input type = "button"
+      value = "start the game"
+      onClick = "startGame()">
+
+</form>
+<hr size=5 color=GREY>
+</td>
+</tr>
+</table
+</center>
+
+
+</body>
+</html>
+
+{:/}
