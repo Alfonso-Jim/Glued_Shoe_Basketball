@@ -1,5 +1,3 @@
-{::nomarkdown}
-
 <html>
 <head>
 <title>Starting Glued-Shoe Basketball</title>
@@ -59,5 +57,3 @@ The game is played to 7 points.  Good luck!<br>
 
 </body>
 </html>
-
-{:/}
