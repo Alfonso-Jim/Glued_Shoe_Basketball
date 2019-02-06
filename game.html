@@ -9,7 +9,7 @@
 // Plays the Glued-Shoe basketball game
 
 // To start this game properly, run gsbbSTART.html, which loads this file.
-// Play the game a bit if you haven't already.
+// Play the game a bit if you haven't already :D
   
 // main variables are declared here
 var playerScore;
@@ -80,13 +80,13 @@ function throwTo(receiver){
 	
     document.myForm.scoreBoard.value = "blocked!!";
 	
-	currentPlayer++;   				// move back one player
+	currentPlayer++;   		// move back one player
     if (currentPlayer > INBOUNDER){   // but don't back up too far
       currentPlayer = INBOUNDER;
     } 
 	
 	// still inside else case for unsuccessful pass or shot
-    // opponent gets a random chance of scoring
+    	// opponent gets a random chance of scoring
 
     if (Math.random() < .20){
       document.myForm.scoreBoard.value += "Opponent scored!! \n";
